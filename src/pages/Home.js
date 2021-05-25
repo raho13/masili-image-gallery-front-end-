@@ -4,11 +4,20 @@ import img1 from "../Assets/r.jpg";
 import img2 from "../Assets/p.jpg";
 import img3 from "../Assets/l.jpg";
 import Navbar from "../components/navbar";
+import axios from "axios";
 export default function Home() {
+  const sendForm = async (e) => {
+    e.preventDefault();
+    const file = e.target.img.files[0];
+    console.log(file);
+    let formdata = new FormData();
+    formdata.append("file", file);
+    formdata.append("upload_preset", "ml_default");
+  };
   return (
     <div>
       <Navbar />
-      <div className="probootstrap-section">
+        <div className="probootstrap-section">
         <div className="container text-center">
           <div className="row">
             <div className="col-md-6 col-md-offset-3 mb40">
