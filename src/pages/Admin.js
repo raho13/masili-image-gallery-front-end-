@@ -60,7 +60,7 @@ export default function Admin() {
 
   const uploadImage = async (base64EncodedImage, e) => {
     try {
-      await axios.post("http://localhost:3000/posts", {
+      await axios.post("https://masili-api.herokuapp.com/posts", {
         data: base64EncodedImage,
         title: e.target.title.value,
         description: e.target.description.value,
