@@ -1,28 +1,10 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 export default function Admin() {
   const [fileInp, setfileInp] = useState("sekil sec");
-  //   const Sendform = async (e) => {
-  //     e.preventDefault();
-  //     let formdata = new FormData();
-  //     formdata.append("file", e.target.img.files[0]);
-  //     formdata.append("title", e.target.title.value);
-  //     formdata.append("description", e.target.description.value);
-  //     formdata.append("category", e.target.category.value);
-  //     await axios
-  //       .post("http://localhost:3000/posts", {
-  //         formdata,
-  //       })
-  //       .then((res) => {
-  //         console.log(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-  //   const handleFileinp = (e) => {
-  //     const file = e.target.files[0];
-  //   };
+
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const [selectedFile, setSelectedFile] = useState();
@@ -67,6 +49,20 @@ export default function Admin() {
         category: e.target.category.value,
         headers: { "Content-Type": "application/json" },
       });
+      toast.success("Təbriklər.Uğurla Yükləndi", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      e.target.title.value = "";
+      e.target.description.value = "";
+      e.target.category.value = "";
+      setfileInp("sekil sec");
+      setPreviewSource("");
 
       console.log("Image uploaded successfully");
     } catch (err) {
@@ -76,6 +72,17 @@ export default function Admin() {
   };
   return (
     <div className="container">
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <form onSubmit={handleSubmitFile}>
         <div className="form-group">
           <label htmlFor="title">title</label>
@@ -132,7 +139,9 @@ export default function Admin() {
           gonder
         </button>
       </form>
-      <img src={previewSource} alt="chosen" style={{ height: "300px" }} />
+      {!(previewSource === "") ? (
+        <img src={previewSource} alt="chosen" style={{ height: "300px" }} />
+      ) : null}
     </div>
   );
 }
