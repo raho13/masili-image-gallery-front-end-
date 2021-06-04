@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import img from "../Assets/4.jpg";
-import img1 from "../Assets/r.jpg";
-import img2 from "../Assets/p.jpg";
-import img3 from "../Assets/l.jpg";
+
 import Navbar from "../components/navbar";
 import axios from "axios";
 import Post from "../components/Post";
