@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { baseURL } from "../../url";
 export default function Admin() {
   const [fileInp, setfileInp] = useState("sekil sec");
   const [fileInputState, setFileInputState] = useState("");
   const [previewSource, setPreviewSource] = useState("");
   const [selectedFile, setSelectedFile] = useState();
-  const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -41,7 +41,7 @@ export default function Admin() {
 
   const uploadImage = async (base64EncodedImage, e) => {
     try {
-      await axios.post("https://masili-api.herokuapp.com/posts", {
+      await axios.post(`${baseURL}/post/add`, {
         data: base64EncodedImage,
         title: e.target.title.value,
         description: e.target.description.value,

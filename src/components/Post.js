@@ -6,11 +6,7 @@ export default function Post({ data }) {
       className="col-md-6 probootstrap-animate fadeIn probootstrap-animated"
       data-animate-effect="fadeIn"
     >
-      <a
-        href="single-page.html"
-        className="img-bg"
-        style={{ backgroundImage: `url(${data.image})` }}
-      >
+      <a className="img-bg" style={{ backgroundImage: `url(${data.image})` }}>
         <div className="probootstrap-photo-details">
           <h2>{data.title}</h2>
           <p>{data.description}</p>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import Navbar from "../components/navbar";
 import axios from "axios";
 import Post from "../components/Post";
+import { baseURL } from "../url";
 export default function Home() {
   const [data, setdata] = useState([]);
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function Home() {
   }, []);
   const FetchData = () => {
     axios
-      .get("https://masili-api.herokuapp.com/posts")
+      .get(`${baseURL}/posts`)
       .then((res) => {
         setdata(res.data.posts);
       })
@@ -30,8 +30,8 @@ export default function Home() {
             </div>
           </div>
           <div className="row probootstrap-gutter16">
-            {data.map((post) => {
-              return <Post data={post} />;
+            {data.map((post, index) => {
+              return <Post key={index} data={post} />;
             })}
           </div>
         </div>

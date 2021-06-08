@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 export default function Card({ method, data }) {
+ 
   return (
     <div className="AD_card card" style={{ width: "18rem" }}>
       <img className="card-img-top" src={data.image} alt="Card image cap" />
@@ -16,7 +17,13 @@ export default function Card({ method, data }) {
           >
             edit
           </button>
-          <button type="button" className="btn btn-danger">
+          <button
+            onClick={() => {
+              method(data, "del");
+            }}
+            type="button"
+            className="btn btn-danger"
+          >
             delete
           </button>
         </div>

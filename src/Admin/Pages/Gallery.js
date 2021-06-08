@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
+import { baseURL } from "../../url";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Gallery() {
   const [data, setdata] = useState([]);
@@ -8,13 +11,15 @@ export default function Gallery() {
   const [popupdata, setpopupdata] = useState({
     title: "",
     description: "",
+    id: "",
+    image_id: "",
   });
   useEffect(() => {
     FetchData();
   }, []);
   const FetchData = () => {
     axios
-      .get("https://masili-api.herokuapp.com/posts")
+      .get(`${baseURL}/post`)
       .then((res) => {
         setdata(res.data.posts);
       })
@@ -22,16 +27,71 @@ export default function Gallery() {
         console.log(err);
       });
   };
-
-  const visform = (e) => {
-    setPopVis(true);
-    setpopupdata({ title: e.title, description: e.description });
+  const editpost = (e) => {
+    e.preventDefault();
+    axios
+      .post(
+        `${baseURL}/post/update/${popupdata.id}`,
+        {
+          description: e.target.description.value,
+          title: e.target.title.value,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success("Təbriklər. Uğurla Yeniləndi", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        setPopVis(false);
+        document.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const deletepost = (e) => {
+    console.log(e.id);
+    console.log(e.image_id);
+    axios
+      .post(`${baseURL}/post/delete/${e.id}`, {
+        image_id: e.image_id,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const visform = (e, del) => {
+    setpopupdata({
+      ...popupdata,
+      title: e.title,
+      description: e.description,
+      id: e._id,
+      image_id: e.image_id,
+    });
+    if (del) {
+      deletepost(popupdata);
+    } else {
+      setPopVis(true);
+    }
   };
   const PopupFrom = () => {
     if (PopVis) {
       return (
         <>
-          <form id="popupform">
+          <form id="popupform" onSubmit={editpost}>
             <div className="form-group">
               <label htmlFor="title">title</label>
               <input
@@ -40,7 +100,7 @@ export default function Gallery() {
                 name="title"
                 value={popupdata.title}
                 onChange={(e) => {
-                  setpopupdata({ title: e.target.value });
+                  setpopupdata({ ...popupdata, title: e.target.value });
                 }}
                 className="form-control"
                 placeholder="title"
@@ -50,16 +110,16 @@ export default function Gallery() {
               <label htmlFor="description">description</label>
               <textarea
                 onChange={(e) => {
-                  setpopupdata({ description: e.target.value });
+                  setpopupdata({ ...popupdata, description: e.target.value });
                 }}
                 name="description"
                 className="form-control"
                 placeholder="description"
-                defaultValue={popupdata.description}
-              ></textarea>
+                value={popupdata.description}
+              />
             </div>
             <div className="btn-group" role="group" aria-label="Basic example">
-              <button type="button" className="btn btn-secondary">
+              <button type="submit" className="btn btn-secondary">
                 save
               </button>
               <button
@@ -80,6 +140,17 @@ export default function Gallery() {
   };
   return (
     <div className="AD-Cards">
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {PopupFrom()}
       {data.map((post, index) => {
         return <Card key={index} method={visform} data={post} />;
