@@ -10,9 +10,10 @@ export default function Home() {
   }, []);
   const FetchData = () => {
     axios
-      .get(`${baseURL}/posts`)
+      .get(`${baseURL}/post/all`)
       .then((res) => {
         setdata(res.data.posts);
+        console.log(data);
       })
       .catch((err) => {
         console.log(err);

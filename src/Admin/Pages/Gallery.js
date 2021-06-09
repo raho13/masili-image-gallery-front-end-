@@ -19,7 +19,7 @@ export default function Gallery() {
   }, []);
   const FetchData = () => {
     axios
-      .get(`${baseURL}/post`)
+      .get(`${baseURL}/post/all`)
       .then((res) => {
         setdata(res.data.posts);
       })
@@ -60,10 +60,9 @@ export default function Gallery() {
       });
   };
   const deletepost = (e) => {
-    console.log(e.id);
-    console.log(e.image_id);
+    console.log(e._id, "delete");
     axios
-      .post(`${baseURL}/post/delete/${e.id}`, {
+      .post(`${baseURL}/post/delete/${e._id}`, {
         image_id: e.image_id,
       })
       .then((res) => {
@@ -73,7 +72,7 @@ export default function Gallery() {
         console.log(err);
       });
   };
-  const visform = (e, del) => {
+  const visform = (e) => {
     setpopupdata({
       ...popupdata,
       title: e.title,
@@ -81,12 +80,9 @@ export default function Gallery() {
       id: e._id,
       image_id: e.image_id,
     });
-    if (del) {
-      deletepost(popupdata);
-    } else {
-      setPopVis(true);
-    }
+    setPopVis(true);
   };
+
   const PopupFrom = () => {
     if (PopVis) {
       return (
@@ -153,7 +149,14 @@ export default function Gallery() {
       />
       {PopupFrom()}
       {data.map((post, index) => {
-        return <Card key={index} method={visform} data={post} />;
+        return (
+          <Card
+            key={index}
+            editpost={visform}
+            deletepost={deletepost}
+            data={post}
+          />
+        );
       })}
     </div>
   );
