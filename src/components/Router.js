@@ -5,9 +5,10 @@ import Admin from "../pages/Admin";
 import Home from "../pages/Home";
 import Login from '../pages/Login'
 import Register from '../pages/Register'
-export default function BasicExample() {
+import Profil from '../pages/profil/Profil'
+export default function Navigation() {
   return (
-    <Router>
+  
       <Switch>
         <Route exact path="/">
           <Home />
@@ -24,7 +25,10 @@ export default function BasicExample() {
         <Route exact path="/admin/add">
           <Admin />
         </Route>
+        <Route exact path="/profile">
+          <Profil />
+        </Route>
       </Switch>
-    </Router>
+ 
   );
 }

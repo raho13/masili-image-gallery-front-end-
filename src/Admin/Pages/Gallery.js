@@ -64,7 +64,6 @@ export default function Gallery() {
         image_id: e.image_id,
       })
       .then((res) => {
-        console.log(res);
         window.location.reload();
       })
       .catch((err) => {

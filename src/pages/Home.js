@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/navbar";
+
 import axios from "axios";
 import Post from "../components/Post";
 export default function Home() {
@@ -19,7 +19,6 @@ export default function Home() {
   };
   return (
     <div>
-      <Navbar />
       <div className="probootstrap-section">
         <div className="container text-center">
           <div className="row">
