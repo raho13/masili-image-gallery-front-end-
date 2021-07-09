@@ -69,6 +69,7 @@ export default function Admin() {
       setErrMsg("Something went wrong!");
     }
   };
+  
   return (
     <div className="container">
       <ToastContainer

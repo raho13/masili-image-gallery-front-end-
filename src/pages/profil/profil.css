@@ -11,8 +11,11 @@ body {
 .account-settings .user-profile .user-avatar {
   margin: 0 0 1rem 0;
 }
-.account-settings .user-profile .user-avatar img {
+.account-settings .user-profile .user-avatar .av {
   width: 90px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   height: 90px;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
@@ -48,4 +51,17 @@ body {
   background: #343434;
   color: #bcd0f7;
 }
-
+#avatarCnt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#AVATAR_INPUT {
+  background-color: transparent;
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  width: 90px;
+  height: 90px;
+}

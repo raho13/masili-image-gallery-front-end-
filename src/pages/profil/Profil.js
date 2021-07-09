@@ -3,18 +3,22 @@ import axios from "axios";
 import Loader from "../../components/Loader";
 import { ToastContainer, toast } from "react-toastify";
 import "./profil.css";
+import Avatar from "../../components/profile/Avatar";
 export default function Profil() {
   const [loading, setloading] = useState(false);
   const [password_confirm, setpassword_confirm] = useState("");
   const [errText, seterrText] = useState("");
+  const [imgCheck, setimgCheck] = useState(false);
   const [resetData, setresetData] = useState({});
   const [data, setdata] = useState({
+    avatar: {},
     username: "",
     email: "",
     about: "",
     phone: "",
     old_password: "",
     new_password: "",
+    old_img_id: "",
   });
   useEffect(() => {
     FetchData();
@@ -25,10 +29,12 @@ export default function Profil() {
       .then((res) => {
         setdata({
           ...data,
+          avatar: res.data.avatar,
           username: res.data.username,
           email: res.data.email,
           about: res.data.about,
           phone: res.data.phone,
+          old_img_id: res.data.avatar.id,
         });
         setresetData(res.data);
         setloading(true);
@@ -38,14 +44,15 @@ export default function Profil() {
       });
   };
   const Update = () => {
+     setloading(false);
     if (!(password_confirm === data.new_password)) {
       seterrText("sifreler uygun deyil");
     } else {
       seterrText("");
       axios
-        .post("profile", data)
+        .post(imgCheck ? "profile/image" : "profile", data)
         .then((res) => {
-          window.location.reload();
+           window.location.reload();
         })
         .catch((err) => {
           if (err.response.status === 401)
@@ -64,9 +71,7 @@ export default function Profil() {
   return (
     <>
       {loading ? (
-        <div className="container" onClick={()=>{
-          console.log(data)
-        }}>
+        <div className="container">
           <ToastContainer
             position="top-right"
             autoClose={1000}
@@ -84,12 +89,13 @@ export default function Profil() {
                 <div className="card-body">
                   <div className="account-settings">
                     <div className="user-profile">
-                      <div className="user-avatar">
-                        <img
-                          src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                          alt="Maxwell Admin"
-                        />
-                      </div>
+                      <Avatar
+                        data={data.avatar}
+                        method={(e) => {
+                          setdata({ ...data, avatar: e });
+                          setimgCheck(true);
+                        }}
+                      />
                       <h5 className="user-name">{data.username}</h5>
                       <h6 className="user-email">{data.email}</h6>
                     </div>

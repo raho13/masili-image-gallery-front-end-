@@ -58,7 +58,6 @@ export default function Gallery() {
       });
   };
   const deletepost = (e) => {
-    console.log(e._id, "delete");
     axios
       .post(`post/delete/${e._id}`, {
         image_id: e.image_id,
