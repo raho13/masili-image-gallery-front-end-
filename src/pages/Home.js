@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import axios from "axios";
 import Post from "../components/Post";
-import { baseURL } from "../url";
 export default function Home() {
   const [data, setdata] = useState([]);
   useEffect(() => {
@@ -10,10 +9,9 @@ export default function Home() {
   }, []);
   const FetchData = () => {
     axios
-      .get(`${baseURL}/post/all`)
+      .get("post/all")
       .then((res) => {
         setdata(res.data.posts);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);

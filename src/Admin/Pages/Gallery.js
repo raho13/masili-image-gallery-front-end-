@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
-import { baseURL } from "../../url";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function Gallery() {
   const [data, setdata] = useState([]);
@@ -19,7 +17,7 @@ export default function Gallery() {
   }, []);
   const FetchData = () => {
     axios
-      .get(`${baseURL}/post/all`)
+      .get("post/all")
       .then((res) => {
         setdata(res.data.posts);
       })
@@ -31,7 +29,7 @@ export default function Gallery() {
     e.preventDefault();
     axios
       .post(
-        `${baseURL}/post/update/${popupdata.id}`,
+        `post/update/${popupdata.id}`,
         {
           description: e.target.description.value,
           title: e.target.title.value,
@@ -62,11 +60,12 @@ export default function Gallery() {
   const deletepost = (e) => {
     console.log(e._id, "delete");
     axios
-      .post(`${baseURL}/post/delete/${e._id}`, {
+      .post(`post/delete/${e._id}`, {
         image_id: e.image_id,
       })
       .then((res) => {
         console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

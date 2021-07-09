@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ReactComponent as Menubtn } from "../Assets/bars-solid.svg";
 import { ReactComponent as ClsMenubtn } from "../Assets/times-solid.svg";
-import { ReactComponent as Category } from "../Assets/icons/list.svg";
 export default function Navbar() {
   const [Menuvis, setMenuvis] = useState(false);
   const visclass = () => {
@@ -26,7 +25,7 @@ export default function Navbar() {
               <label className="sr-only" htmlFor="search">
                 Search
               </label>
-              <input type="search" name id="search" placeholder="Axtar" />
+              <input type="search"  id="search" placeholder="Axtar" />
             </form>
           </div>
         </div>

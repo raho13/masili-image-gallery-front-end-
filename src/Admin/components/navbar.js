@@ -1,10 +1,8 @@
 import React from "react";
 import {
   Link,
-  useRouteMatch,
 } from "react-router-dom";
 export default function Navbar() {
-  const { url } = useRouteMatch();
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <a className="navbar-brand" href="#">
@@ -23,10 +21,10 @@ export default function Navbar() {
       </button>
       <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div className="navbar-nav">
-          <Link className="nav-item nav-link active" to={`${url}/add`}>
+          <Link className="nav-item nav-link active" to="/admin/add">
             Add post
           </Link>
-          <Link className="nav-item nav-link" to={`${url}/gallery`}>
+          <Link className="nav-item nav-link" to="/admin/gallery">
             Gallery
           </Link>
         </div>
