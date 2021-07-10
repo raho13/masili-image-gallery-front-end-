@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../../components/Loader";
-import { ToastContainer, toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { isAuth } from "../../Atoms/global";
+import AlertContainer, { Alert } from "../../Helpers/alert";
+import { Alert } from "../../Helpers/alert";
 import "./profil.css";
 import Avatar from "../../components/profile/Avatar";
 export default function Profil() {
+  const [state, setstate] = useRecoilState(isAuth);
   const [loading, setloading] = useState(false);
   const [password_confirm, setpassword_confirm] = useState("");
   const [errText, seterrText] = useState("");
@@ -44,27 +48,23 @@ export default function Profil() {
       });
   };
   const Update = () => {
-     setloading(false);
+    setloading(false);
     if (!(password_confirm === data.new_password)) {
-      seterrText("sifreler uygun deyil");
+      seterrText("şifrələr uyğun deyil");
+      Alert.info("şifrələr uyğun deyil");
     } else {
       seterrText("");
       axios
         .post(imgCheck ? "profile/image" : "profile", data)
         .then((res) => {
-           window.location.reload();
+          window.location.reload();
+          setloading(true);
         })
         .catch((err) => {
-          if (err.response.status === 401)
-            toast.error("Köhnə şifrə düzgün daxil edilməyib", {
-              position: "top-center",
-              autoClose: 2500,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
+          if (err.response.status === 401) {
+            setloading(true);
+            Alert.error("Köhnə şifrə düzgün daxil edilməyib");
+          }
         });
     }
   };
@@ -72,17 +72,7 @@ export default function Profil() {
     <>
       {loading ? (
         <div className="container">
-          <ToastContainer
-            position="top-right"
-            autoClose={1000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+          <AlertContainer />
           <div className="row gutters">
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
               <div className="card h-100">
@@ -105,6 +95,17 @@ export default function Profil() {
                     </div>
                   </div>
                 </div>
+                <button
+                  onClick={() => {
+                    localStorage.setItem("masili", null);
+                    setstate(false);
+                    window.location.href = "/login";
+                  }}
+                  type="button"
+                  className="btn btn-dark"
+                >
+                  Logout
+                </button>
               </div>
             </div>
             <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">

@@ -1,4 +1,3 @@
-import React from "react";
 import Addpost from "../Admin/Pages/Addpost";
 import Gallery from "../Admin/Pages/Gallery";
 import { Switch, Route } from "react-router-dom";

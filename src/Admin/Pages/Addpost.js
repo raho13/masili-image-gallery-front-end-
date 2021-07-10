@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import AlertContainer, { Alert } from "../../Helpers/alert";
 import axios from "axios";
 import { baseURL } from "../../url";
 export default function Admin() {
@@ -48,41 +47,22 @@ export default function Admin() {
         category: e.target.category.value,
         headers: { "Content-Type": "application/json" },
       });
-      toast.success("Təbriklər.Uğurla Yükləndi", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      Alert.success("Təbriklər.Uğurla Yükləndi");
       e.target.title.value = "";
       e.target.description.value = "";
       e.target.category.value = "";
       setfileInp("sekil sec");
       setPreviewSource("");
-
       console.log("Image uploaded successfully");
     } catch (err) {
       console.error(err);
       setErrMsg("Something went wrong!");
     }
   };
-  
+
   return (
     <div className="container">
-      <ToastContainer
-        position="top-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <AlertContainer />
       <form onSubmit={handleSubmitFile}>
         <div className="form-group">
           <label htmlFor="title">title</label>

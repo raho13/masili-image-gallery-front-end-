@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Card from "../components/Card";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-
+import AlertContainer, { Alert } from "../../Helpers/alert";
 export default function Gallery() {
   const [data, setdata] = useState([]);
   const [PopVis, setPopVis] = useState(false);
@@ -41,15 +40,7 @@ export default function Gallery() {
         }
       )
       .then((res) => {
-        toast.success("Təbriklər. Uğurla Yeniləndi", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        Alert.success("Təbriklər. Uğurla Yeniləndi");
         setPopVis(false);
         document.location.reload();
       })
@@ -133,17 +124,7 @@ export default function Gallery() {
   };
   return (
     <div className="AD-Cards">
-      <ToastContainer
-        position="top-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <AlertContainer />
       {PopupFrom()}
       {data.map((post, index) => {
         return (

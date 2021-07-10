@@ -1,4 +1,3 @@
-import React from "react";
 export default function Card({ editpost, data, deletepost }) {
   return (
     <div className="AD_card card" style={{ width: "18rem" }}>

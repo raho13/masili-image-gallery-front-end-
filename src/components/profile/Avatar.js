@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ReactComponent as Trash } from "../../Assets/icons/trash.svg";
 import defaultImg from "../../Assets/unknow.png";
 import Swal from "sweetalert2";
