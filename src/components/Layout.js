@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [state, setstate] = useRecoilState(isAuth);
   useLayoutEffect(() => {
-    localStorage.setItem("masili", null);
     if (
       !(localStorage.getItem("masili") === null) ||
       localStorage.getItem("masili").length > 10
