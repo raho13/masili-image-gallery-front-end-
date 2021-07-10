@@ -4,7 +4,6 @@ import Loader from "../../components/Loader";
 import { useRecoilState } from "recoil";
 import { isAuth } from "../../Atoms/global";
 import AlertContainer, { Alert } from "../../Helpers/alert";
-import { Alert } from "../../Helpers/alert";
 import "./profil.css";
 import Avatar from "../../components/profile/Avatar";
 export default function Profil() {
