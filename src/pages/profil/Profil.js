@@ -44,6 +44,8 @@ export default function Profil() {
       })
       .catch((err) => {
         console.log(err);
+        setstate(false);
+        window.location.href = "/";
       });
   };
   const Update = () => {
