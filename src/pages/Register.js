@@ -21,8 +21,8 @@ export default function Register() {
         .post("register", user)
         .then((res) => {
           localStorage.setItem("masili", res.data);
-          setstate(true);
           window.location.href = "/";
+          setstate(true);
         })
         .catch((err) => {
           if (err.response.status === 401) {

@@ -1,24 +1,30 @@
 import Navigation from "../components/Router";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
-import { useLayoutEffect } from "react";
 import { isAuth } from "../Atoms/global";
 import { useRecoilState } from "recoil";
 import { BrowserRouter as Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 function App() {
   const [state, setstate] = useRecoilState(isAuth);
-  useLayoutEffect(() => {
-    if (
-      !(localStorage.getItem("masili") === null) ||
-      localStorage.getItem("masili").length > 10
-    ) {
-      setstate(true);
-    }
+  const [tepmlate, settepmlate] = useState(false);
+  useEffect(() => {
+    axios
+      .get("profile")
+      .then((res) => {
+        setstate(true);
+        settepmlate(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        settepmlate(true);
+      });
   }, []);
 
   return (
     <>
-      {state ? (
+      {tepmlate ? (
         <Router>
           <Navbar />
           <Navigation />

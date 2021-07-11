@@ -21,6 +21,7 @@ export default function Navigation() {
       <Route exact component={Register} path="/register" />
       <Route exact component={Admin} path="/admin/gallery" />
       <Route exact component={Admin} path="/admin/add" />
+      <Route component={Home} /> {/* not found route */}
     </Switch>
   );
 }
@@ -30,10 +31,10 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (state) {
+        if (true) {
           return <Component {...props} />;
         } else {
-          return <Redirect to="/login" />;
+          return <Redirect to="/" />;
         }
       }}
     />

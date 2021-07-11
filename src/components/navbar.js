@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { ReactComponent as Menubtn } from "../Assets/bars-solid.svg";
 import { ReactComponent as ClsMenubtn } from "../Assets/times-solid.svg";
 import { ReactComponent as Saved } from "../Assets/icons/ribbon.svg";
 import { ReactComponent as User } from "../Assets/icons/user.svg";
 import { Link } from "react-router-dom";
+import {useRecoilState} from "recoil";
+import {isAuth} from "../Atoms/global";
+
 export default function Navbar() {
   const [Menuvis, setMenuvis] = useState(false);
+  const [state, setstate] = useRecoilState(isAuth);
   const visclass = () => {
     if (Menuvis) {
       return "nav__wrapper active";
@@ -13,6 +17,7 @@ export default function Navbar() {
       return "nav__wrapper ";
     }
   };
+  // useEffect(()=>{console.log(state)},[])
   return (
     <header className="site-header" style={{ marginBottom: "50px" }}>
       <div className="wrapper site-header__wrapper">
@@ -32,6 +37,7 @@ export default function Navbar() {
             </form>
           </div>
         </div>
+        {state?
         <div className="site-header__end">
           <nav className="nav">
             <div
@@ -110,6 +116,7 @@ export default function Navbar() {
             </ul>
           </nav>
         </div>
+        :null}
       </div>
     </header>
   );

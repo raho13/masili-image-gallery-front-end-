@@ -43,9 +43,8 @@ export default function Profil() {
         setloading(true);
       })
       .catch((err) => {
-        console.log(err);
         setstate(false);
-        window.location.href = "/";
+         window.location.href = "/";
       });
   };
   const Update = () => {

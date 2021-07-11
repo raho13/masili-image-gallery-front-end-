@@ -13,8 +13,8 @@ export default function Login() {
       .post("login", user)
       .then((res) => {
         localStorage.setItem("masili", res.data);
-        setstate(true);
         window.location.href = "/";
+        setstate(true);
       })
       .catch((err) => {
         Alert.error("email və ya şifə yanlışdır");
