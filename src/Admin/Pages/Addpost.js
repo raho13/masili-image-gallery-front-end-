@@ -40,7 +40,7 @@ export default function Admin() {
 
   const uploadImage = async (base64EncodedImage, e) => {
     try {
-      await axios.post(`${baseURL}/post/add`, {
+      await axios.post("/post/add", {
         data: base64EncodedImage,
         title: e.target.title.value,
         description: e.target.description.value,
