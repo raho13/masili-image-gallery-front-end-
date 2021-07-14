@@ -6,6 +6,7 @@ import { isAuth } from "../../Atoms/global";
 import AlertContainer, { Alert } from "../../Helpers/alert";
 import "./profil.css";
 import Avatar from "../../components/profile/Avatar";
+import { socket } from "../../url";
 export default function Profil() {
   const [state, setstate] = useRecoilState(isAuth);
   const [loading, setloading] = useState(false);
@@ -44,7 +45,7 @@ export default function Profil() {
       })
       .catch((err) => {
         setstate(false);
-         window.location.href = "/";
+        window.location.href = "/";
       });
   };
   const Update = () => {
@@ -57,7 +58,22 @@ export default function Profil() {
       axios
         .post(imgCheck ? "profile/image" : "profile", data)
         .then((res) => {
-          window.location.reload();
+          socket.emit("data", data);
+          socket.on("data", (personal) => {
+            
+            setdata({
+              ...data,
+              avatar: personal.avatar,
+              username: personal.username,
+              email: personal.email,
+              about: personal.about,
+              phone: personal.phone,
+              old_img_id: personal.avatar.id,
+              new_password: "",
+              old_password: "",
+            });
+            setpassword_confirm("");
+          });
           setloading(true);
         })
         .catch((err) => {
@@ -71,7 +87,9 @@ export default function Profil() {
   return (
     <>
       {loading ? (
-        <div className="container">
+        <div className="container" onClick={()=>{
+          console.log(data)
+        }}>
           <AlertContainer />
           <div className="row gutters">
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
